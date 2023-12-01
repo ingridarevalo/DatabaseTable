@@ -1,0 +1,30 @@
+@startuml
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>Primary Key: x</u>
+!define forgien_key(x) <u>Forgien Key: x</u>
+!define secondary_key(x)  <u>Secondary Key: x </u>
+hide methods
+hide stereotypes
+
+table(Users) {
+  + primary_key(DID)
+  - String: UserName
+  + String: Password + SHA + Hash + Salt
+  
+}
+table(Repos)
+{
+  
+  + primary_key(IPID)
+  + forgien_key(DID)
+  + secondary_key(CID)
+  - String: DAG-CBOR
+
+}
+table(rkey)
+{
+
+}
+
+
+@enduml
