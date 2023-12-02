@@ -1,0 +1,122 @@
+@startuml nameData
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>Primary Key: x</u>
+!define forgien_key(x) <u>Forgien Key: x</u>
+!define secondary_key(x)  <u>Secondary Key: x </u>
+hide methods
+hide stereotypes
+
+table(Users) {
+  + primary_key(DID)
+  - String: UserName
+  + String: Password + SHA + Hash + Salt
+  - String: Email
+  - String: FirstName
+  - String: LastName
+  
+}
+table(Repos)
+{
+  
+  + primary_key(IPID)
+  + forgien_key(DID)
+  + secondary_key(CID)
+  - String: DAG-CBOR
+    - String: RepoName
+    - String: RepoDescription
+    - String: RepoType
+    - String: RepoSize
+    - String: RepoDate
+    - String: RepoTime
+    - String: RepoVersion
+
+
+
+}
+table(Commits)
+{
+  + primary_key(CID)
+  + forgien_key(IPID)   
+    - String: DAG-CBOR
+    - String: CommitName
+    - String: CommitDescription
+    - String: CommitType
+    - String: CommitSize
+    - String: CommitDate
+    - String: CommitTime
+    - String: CommitVersion
+
+}
+
+table(Files)
+{
+  + primary_key(FID)
+  + forgien_key(CID)
+  - String: DAG-CBOR
+    - String: FileName
+    - String: FileDescription
+    - String: FileType
+    - String: FileSize
+    - String: FileDate
+    - String: FileTime
+    - String: FileVersion
+    - String: FileContent
+}
+
+table(Permissions)
+{
+  + primary_key(PID)
+  + forgien_key(DID)
+  + forgien_key(IPID)
+  - String: Permission
+
+}
+
+table(Groups)
+{
+  + primary_key(GID)
+  + forgien_key(DID)
+  - String: GroupName
+  - String: GroupSize
+   
+
+}
+
+table(Groups_Users)
+{
+  + primary_key(GUID)
+  + forgien_key(GID)
+  + forgien_key(DID)
+}
+
+table(Groups_Repos)
+{
+  + primary_key(GRID)
+  + forgien_key(GID)
+  + forgien_key(IPID)
+}
+
+table(Groups_Permissions)
+{
+  + primary_key(GPID)
+  + forgien_key(GID)
+  + forgien_key(PID)
+}
+
+table(PDS)
+{
+  + primary_key(PDSID)
+  + forgien_key(DID)
+  - String: PDS
+
+ 
+}
+
+
+
+
+
+
+
+
+@enduml
