@@ -1,0 +1,127 @@
+@startuml
+!define table(x) class x << (E,#FFAAAA) >>
+!define primary_key(x) <u><color:#b8861b><&key></color> Primary Key: x</u>
+!define forgien_key(x) <u><color:#aaaaaa><&key></color> Foreign Key: x  </u>
+!define secondary_key(x)  <u><color:#111111><&key></color>Secondary Key: x </u>
+hide methods
+hide stereotypes
+
+' Entities
+
+table(Users) {
+  - primary_key(DID)
+  + varchar: UserName
+  + varchar: Password + SHA + Hash + Salt
+  + varchar: Email
+  + varchar: FirstName
+  + varchar: LastName
+  
+}
+table(Repos)
+{
+  
+  - primary_key(IPID)
+  - forgien_key(DID)
+  - secondary_key(CID)
+  + varchar: DAG+CBOR
+    + varchar: RepoName
+    + varchar: RepoDescription
+    + varchar: RepoType
+    + Int: RepoSize
+    + Date: RepoDate
+    + DateTime: RepoTime
+    + Int: RepoVersion
+
+
+
+}
+table(Commits)
+{
+  - primary_key(CID)
+  - forgien_key(IPID)   
+    + varchar: DAG+CBOR
+    + varchar: CommitName
+    + varchar: CommitDescription
+    + varchar: CommitType
+    + Int: CommitSize
+    + Date: CommitDate
+    + DateTime: CommitTime
+    + Int: CommitVersion
+
+}
+
+table(DAG_CBOR_Objects)
+{
+  - primary_key(FID)
+  - forgien_key(CID)
+  + varchar: DAG+CBOR + CID
+    + varchar: FileName
+    + varchar: FileDescription
+    + varchar: FileType
+    + Int: FileSize
+    + Date: FileDate
+    + DateTime: FileTime
+    + Int: FileVersion
+    + varchar: FileContent
+}
+
+table(Permissions)
+{
+  - pimary_key(PID)
+  - forgien_key(DID)
+  - forgien_key(IPID)
+  + varchar: Permission
+
+}
+
+table(Groups)
+{
+  - pimary_key(GID)
+  - forgien_key(DID)
+  + varchar: GroupName
+  + Int: GroupSize
+   
+
+}
+
+table(Groups_Users)
+{
+  - primary_key(GUID)
+  - forgien_key(GID)
+  - forgien_key(DID)
+}
+
+table(Groups_Repos)
+{
+  - primary_key(GRID)
+  - forgien_key(GID)
+  - forgien_key(IPID)
+}
+
+table(Groups_Permissions)
+{
+  - primary_key(GPID)
+  - forgien_key(GID)
+  - forgien_key(PID)
+}
+
+table(PDS)
+{
+  - primary_key(PDSID)
+  - forgien_key(DID)
+  + varchar: PDS
+
+ 
+}
+
+' Relationships
+Users "1" -- "0..*" Repos
+Users "1" -- "0..*" Permissions
+Users "1" -- "0..*" Groups
+Users "1" -- "0..*" PDS 
+Repos "1" -- "0..*" Commits : contains
+Commits "1" -- "0..*" DAG_CBOR_Objects
+Groups "1" -- "0..*" Groups_Users
+Groups "1" -- "0..*" Groups_Repos
+Groups "1" -- "0..*" Groups_Permissions
+@enduml
