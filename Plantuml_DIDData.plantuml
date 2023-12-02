@@ -48,11 +48,11 @@ table(Commits)
 
 }
 
-table(Files)
+table(DAG-CBOR-Objects)
 {
   + primary_key(FID)
   + forgien_key(CID)
-  - String: DAG-CBOR
+  - String: DAG-CBOR + CID
     - String: FileName
     - String: FileDescription
     - String: FileType
