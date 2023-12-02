@@ -1,113 +1,113 @@
 @startuml nameData
 !define table(x) class x << (T,#FFAAAA) >>
-!define primary_key(x) <u>Primary Key: x</u>
-!define forgien_key(x) <u>Forgien Key: x</u>
-!define secondary_key(x)  <u>Secondary Key: x </u>
+!define primary_key(x) <u><color:#b8861b><&key></color> Primary Key: x</u>
+!define forgien_key(x) <u><color:#aaaaaa><&key></color> Foreign Key: x  </u>
+!define secondary_key(x)  <u><color:#111111><&key></color>Secondary Key: x </u>
 hide methods
 hide stereotypes
 
 table(Users) {
-  + primary_key(DID)
-  - String: UserName
-  + String: Password + SHA + Hash + Salt
-  - String: Email
-  - String: FirstName
-  - String: LastName
+  - primary_key(DID)
+  + varchar: UserName
+  + varchar: Password + SHA + Hash + Salt
+  + varchar: Email
+  + varchar: FirstName
+  + varchar: LastName
   
 }
 table(Repos)
 {
   
-  + primary_key(IPID)
-  + forgien_key(DID)
-  + secondary_key(CID)
-  - String: DAG-CBOR
-    - String: RepoName
-    - String: RepoDescription
-    - String: RepoType
-    - String: RepoSize
-    - String: RepoDate
-    - String: RepoTime
-    - String: RepoVersion
+  - primary_key(IPID)
+  - forgien_key(DID)
+  - secondary_key(CID)
+  + varchar: DAG+CBOR
+    + varchar: RepoName
+    + varchar: RepoDescription
+    + varchar: RepoType
+    + Int: RepoSize
+    + Date: RepoDate
+    + DateTime: RepoTime
+    + Int: RepoVersion
 
 
 
 }
 table(Commits)
 {
-  + primary_key(CID)
-  + forgien_key(IPID)   
-    - String: DAG-CBOR
-    - String: CommitName
-    - String: CommitDescription
-    - String: CommitType
-    - String: CommitSize
-    - String: CommitDate
-    - String: CommitTime
-    - String: CommitVersion
+  - primary_key(CID)
+  - forgien_key(IPID)   
+    + varchar: DAG+CBOR
+    + varchar: CommitName
+    + varchar: CommitDescription
+    + varchar: CommitType
+    + Int: CommitSize
+    + Date: CommitDate
+    + DateTime: CommitTime
+    + Int: CommitVersion
 
 }
 
 table(DAG-CBOR-Objects)
 {
-  + primary_key(FID)
-  + forgien_key(CID)
-  - String: DAG-CBOR + CID
-    - String: FileName
-    - String: FileDescription
-    - String: FileType
-    - String: FileSize
-    - String: FileDate
-    - String: FileTime
-    - String: FileVersion
-    - String: FileContent
+  - primary_key(FID)
+  - forgien_key(CID)
+  + varchar: DAG+CBOR + CID
+    + varchar: FileName
+    + varchar: FileDescription
+    + varchar: FileType
+    + Int: FileSize
+    + Date: FileDate
+    + DateTime: FileTime
+    + Int: FileVersion
+    + varchar: FileContent
 }
 
 table(Permissions)
 {
-  + primary_key(PID)
-  + forgien_key(DID)
-  + forgien_key(IPID)
-  - String: Permission
+  - pimary_key(PID)
+  - forgien_key(DID)
+  - forgien_key(IPID)
+  + varchar: Permission
 
 }
 
 table(Groups)
 {
-  + primary_key(GID)
-  + forgien_key(DID)
-  - String: GroupName
-  - String: GroupSize
+  - pimary_key(GID)
+  - forgien_key(DID)
+  + varchar: GroupName
+  + Int: GroupSize
    
 
 }
 
 table(Groups_Users)
 {
-  + primary_key(GUID)
-  + forgien_key(GID)
-  + forgien_key(DID)
+  - primary_key(GUID)
+  - forgien_key(GID)
+  - forgien_key(DID)
 }
 
 table(Groups_Repos)
 {
-  + primary_key(GRID)
-  + forgien_key(GID)
-  + forgien_key(IPID)
+  - primary_key(GRID)
+  - forgien_key(GID)
+  - forgien_key(IPID)
 }
 
 table(Groups_Permissions)
 {
-  + primary_key(GPID)
-  + forgien_key(GID)
-  + forgien_key(PID)
+  - primary_key(GPID)
+  - forgien_key(GID)
+  - forgien_key(PID)
 }
 
 table(PDS)
 {
-  + primary_key(PDSID)
-  + forgien_key(DID)
-  - String: PDS
+  - primary_key(PDSID)
+  - forgien_key(DID)
+  + varchar: PDS
 
  
 }
